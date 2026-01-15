@@ -1,0 +1,9 @@
+# Development dependencies (optional but recommended)
+bandit>=1.7.5
+safety>=3.0.0
+mypy>=1.0.0
+pre-commit>=3.0.0
+
+# Additional testing tools
+pytest-asyncio>=0.21.0
+pytest-mock>=3.10.0
