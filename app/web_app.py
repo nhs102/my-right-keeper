@@ -51,7 +51,27 @@ if "cache_stats" not in st.session_state:
 
 # 사이드바: 시스템 정보 및 캐시 통계
 with st.sidebar:
-    st.header("📊 System Info")
+    st.header("� API Key Settings")
+    
+    # 사용자로부터 API 키 입력 받기
+    user_api_key = st.text_input(
+        "Enter your Google API Key",
+        type="password",
+        help="Get your API key from https://aistudio.google.com/app/apikey",
+        placeholder="AIzaSy..."
+    )
+    
+    if user_api_key:
+        # 입력받은 키를 환경 변수에 임시 설정
+        os.environ["GOOGLE_API_KEY"] = user_api_key
+        st.success("API Key applied for this session!")
+    else:
+        st.warning("Please enter your Google API Key to use the AI features.")
+        st.markdown("[Get an API key here](https://aistudio.google.com/app/apikey)")
+
+    st.divider()
+
+    st.header("�📊 System Info")
 
     # Chat statistics
     user_message_count = len(
@@ -139,7 +159,7 @@ if prompt := st.chat_input("Tell me your situation: '퇴사한지 3개월인데 
 
     with st.spinner("Generating response... Please wait."):
         if not os.getenv("GOOGLE_API_KEY"):
-            response_text = "⚠️ Error: GOOGLE_API_KEY environment variable is not set."
+            response_text = "⚠️ Error: Please enter your Google API Key in the sidebar to use this feature."
         else:
             # 캐시 확인
             cached_vector_store, cache_key = st.session_state.vector_cache.get(
