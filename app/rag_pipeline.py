@@ -1,4 +1,5 @@
 import logging
+import os
 from dotenv import load_dotenv
 from typing import List
 from langchain_core.documents import Document
@@ -307,6 +308,7 @@ def create_vector_store(documents: List[Document]) -> FAISS:
     embeddings = GoogleGenerativeAIEmbeddings(
         model=config.EMBEDDING_MODEL,
         api_version="v1",
+        google_api_key=os.environ.get("GOOGLE_API_KEY", config.GOOGLE_API_KEY),
     )
 
     # Create the vector store from the documents and embeddings
@@ -329,7 +331,10 @@ def get_rag_answer(query: str, vector_store: FAISS) -> str:
 
     # Define the LLM with a stable model name
     logger.debug(f"Initializing LLM with model: {config.GEMINI_MODEL}")
-    llm = ChatGoogleGenerativeAI(model=config.GEMINI_MODEL)
+    llm = ChatGoogleGenerativeAI(
+        model=config.GEMINI_MODEL,
+        google_api_key=os.environ.get("GOOGLE_API_KEY", config.GOOGLE_API_KEY),
+    )
 
     # Create a prompt template for the LLM
     template = """

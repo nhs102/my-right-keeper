@@ -4,6 +4,7 @@ Intelligent query processing using Generative AI
 """
 
 import logging
+import os
 from typing import List, Optional
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
@@ -23,7 +24,7 @@ def rephrase_query_with_ai(user_query: str) -> List[str]:
         # Initialize LLM
         llm = ChatGoogleGenerativeAI(
             model=config.GEMINI_MODEL,
-            google_api_key=config.GOOGLE_API_KEY,
+            google_api_key=os.environ.get("GOOGLE_API_KEY", config.GOOGLE_API_KEY),
             temperature=0.3,
         )
         
