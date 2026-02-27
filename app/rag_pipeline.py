@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from typing import List
 from langchain_core.documents import Document
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
@@ -292,23 +292,26 @@ def create_documents_from_api(query: str) -> List[Document]:
     return documents
 
 
-def create_vector_store(documents: List[Document]) -> Chroma:
+def create_vector_store(documents: List[Document]) -> FAISS:
     """
-    Creates a Chroma vector store from a list of documents.
+    Creates a FAISS vector store from a list of documents.
 
     Args:
         documents: List of LangChain Document objects.
 
     Returns:
-        Chroma vector store instance.
+        FAISS vector store instance.
     """
     logger.info(f"Creating vector store with {len(documents)} documents")
     # Initialize the Gemini embedding model
-    embeddings = GoogleGenerativeAIEmbeddings(model=config.EMBEDDING_MODEL)
+    embeddings = GoogleGenerativeAIEmbeddings(
+        model=config.EMBEDDING_MODEL,
+        api_version="v1",
+    )
 
     # Create the vector store from the documents and embeddings
     try:
-        vector_store = Chroma.from_documents(documents=documents, embedding=embeddings)
+        vector_store = FAISS.from_documents(documents=documents, embedding=embeddings)
         logger.info("Vector store created successfully")
         return vector_store
     except Exception as e:
@@ -316,7 +319,7 @@ def create_vector_store(documents: List[Document]) -> Chroma:
         raise
 
 
-def get_rag_answer(query: str, vector_store: Chroma) -> str:
+def get_rag_answer(query: str, vector_store: FAISS) -> str:
     """
     Performs a RAG search and generates a final answer.
     Returns the final answer text.

@@ -2,6 +2,9 @@ import streamlit as st
 import os
 import sys
 import time
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Add current directory to path for imports
 sys.path.append(os.path.dirname(__file__))

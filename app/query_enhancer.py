@@ -6,7 +6,7 @@ Intelligent query processing using Generative AI
 import logging
 from typing import List, Optional
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.schema import HumanMessage
+from langchain_core.messages import HumanMessage
 try:
     from .config import config
 except ImportError:

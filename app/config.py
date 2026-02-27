@@ -15,8 +15,8 @@ class Config:
     """Application configuration class."""
 
     # API Configuration
-    LAW_API_ID: str = os.getenv("LAW_API_ID", "")
-    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
+    LAW_API_ID: str = os.getenv("LAW_API_ID", "tjr001136")
+    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "AIzaSyD7QLXyttlrqk5M3-DYq_NeNG_7zuXCogI")
 
     # API URLs
     LAW_SEARCH_URL: str = "http://www.law.go.kr/DRF/lawSearch.do"
@@ -35,7 +35,7 @@ class Config:
 
     # LLM Configuration
     GEMINI_MODEL: str = "gemini-2.5-flash"
-    EMBEDDING_MODEL: str = "models/embedding-001"
+    EMBEDDING_MODEL: str = "models/gemini-embedding-001"
 
     # RAG Configuration
     CHUNK_SIZE: int = 1000
