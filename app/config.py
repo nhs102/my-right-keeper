@@ -16,7 +16,7 @@ class Config:
 
     # API Configuration
     LAW_API_ID: str = os.getenv("LAW_API_ID", "tjr001136")
-    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "AIzaSyD7QLXyttlrqk5M3-DYq_NeNG_7zuXCogI")
+    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
 
     # API URLs
     LAW_SEARCH_URL: str = "http://www.law.go.kr/DRF/lawSearch.do"
